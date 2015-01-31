@@ -69,7 +69,7 @@ public class GameOfSticks {
         }
     }
     private void processAiInput(Bucket[] buckets){
-        System.out.println("Ai is choosing a random blablalbal \n");
+        System.out.println("Ai is choosing a random Bucket \n");
         this.sticks = this.sticks - buckets[this.sticks % buckets.length].getValue();
     }
     public void playGame2(){
@@ -94,6 +94,7 @@ public class GameOfSticks {
                 processAiInput(buckets);
             this.switchTurns(this.player1, this.player2);
         }
+        System.out.println(this.turn.getPlayerName() + " Won!");
     }
 
     private Bucket[] createSomeBuckets(){
@@ -107,5 +108,27 @@ public class GameOfSticks {
         bucketArr[5] = new Bucket();
         bucketArr[6] = new Bucket();
         return bucketArr;
+    }
+    public void playGame3(){
+        Bucket[] buckets = this.createSomeBuckets();
+        this.turn = player1;
+
+        System.out.println("ROBOTFIGHT!!\nChoose the amount of sticks.");
+        while(true) {
+            try {
+                this.sticks = Integer.parseInt(user_input.next()); //Parses input to int so we can save it
+                break;
+            }catch(Exception e){
+                System.out.println("\nReally..? You just had to choose an integer...\nHow hard is this to understand?");
+                System.out.println("OK. Lets try that again.\n");
+                System.out.println("How many sitcks are there on the table initially (10-100)?");
+            }
+        }
+        while(this.sticks>0) {
+            this.printTurn();
+            processAiInput(buckets);
+            this.switchTurns(this.player1, this.player2);
+        }
+        System.out.println(this.turn.getPlayerName() + " Won!");
     }
 }
