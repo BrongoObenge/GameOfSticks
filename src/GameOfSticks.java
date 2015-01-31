@@ -9,13 +9,13 @@ public class GameOfSticks {
     private int sticks;
 
     private Player turn;
-
+    Scanner user_input = new Scanner(System.in);
     public GameOfSticks(Player player1, Player player2){
         this.player1 = player1;
         this.player2 = player2;
     }
-    public void playGame(){
-        Scanner user_input = new Scanner(System.in);
+    public void playGame1(){
+
         this.turn = this.player1;
 
         System.out.println("Welcome to the game of sticks!");
@@ -30,16 +30,15 @@ public class GameOfSticks {
                 System.out.println("How many sitcks are there on the table initially (10-100)?");
             }
         }
-
         while(this.sticks>0){
             this.printTurn();
-            this.switchTurns();
             this.processInput();
+            this.switchTurns(this.player1, this.player2);
         }
-        this.switchTurns();
+        this.switchTurns(this.player1, this.player2);
         System.out.println(this.turn.getPlayerName() + " Wins!");
     }
-    public void switchTurns(){
+    public void switchTurns(Player player1, Player player2){
         if(this.turn == player1){
             this.turn = player2;
         }else{
@@ -68,7 +67,45 @@ public class GameOfSticks {
             this.printTurn();
             this.processInput();
         }
+    }
+    private void processAiInput(Bucket[] buckets){
+        System.out.println("Ai is choosing a random blablalbal \n");
+        this.sticks = this.sticks - buckets[this.sticks % buckets.length].getValue();
+    }
+    public void playGame2(){
+        Bucket[] buckets = this.createSomeBuckets();
+        this.turn = player1;
+        System.out.println("Aight, Part 2!!!\nHow many sticks are there?");
+        while(true) {
+            try {
+                this.sticks = Integer.parseInt(user_input.next()); //Parses input to int so we can save it
+                break;
+            }catch(Exception e){
+                System.out.println("\nReally..? You just had to choose an integer...\nHow hard is this to understand?");
+                System.out.println("OK. Lets try that again.\n");
+                System.out.println("How many sitcks are there on the table initially (10-100)?");
+            }
+        }
+        while(this.sticks>0) {
+            this.printTurn();
+            if (this.turn == this.player1)
+                this.processInput();
+            else
+                processAiInput(buckets);
+            this.switchTurns(this.player1, this.player2);
+        }
+    }
 
-
+    private Bucket[] createSomeBuckets(){
+        Bucket[] bucketArr;
+        bucketArr = new Bucket[7];
+        bucketArr[0] = new Bucket();
+        bucketArr[1] = new Bucket();
+        bucketArr[2] = new Bucket();
+        bucketArr[3] = new Bucket();
+        bucketArr[4] = new Bucket();
+        bucketArr[5] = new Bucket();
+        bucketArr[6] = new Bucket();
+        return bucketArr;
     }
 }
